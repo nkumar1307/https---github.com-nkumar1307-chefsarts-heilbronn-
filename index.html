@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Elite Catering - Premium Culinary Experience</title>
+   <style>
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body {
+           font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+           line-height: 1.6;
+           color: #2c2c2c;
+           background: #f8f9fa;
+           position: relative;
+           overflow-x: hidden;
+       }
+
+       /* Language Toggle */
+       .language-toggle {
+           position: fixed;
+           top: 20px;
+           right: 20px;
+           z-index: 1000;
+           background: rgba(255, 255, 255, 0.9);
+           backdrop-filter: blur(10px);
+           border-radius: 25px;
+           padding: 8px;
+           box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+           display: flex;
+           gap: 5px;
+       }
+
+       .lang-btn {
+           padding: 8px 16px;
+           border: none;
+           background: transparent;
+           border-radius: 20px;
+           cursor: pointer;
+           font-weight: 600;
+           color: #666;
+           transition: all 0.3s ease;
+           font-size: 14px;
+       }
+
+       .lang-btn.active {
+           background: #2c2c2c;
+           color: white;
+       }
+
+       .lang-btn:hover:not(.active) {
+           background: rgba(44, 44, 44, 0.1);
+           color: #2c2c2c;
+       }
+
+       /* Fixed Background Logo Watermark */
+       body::before {
+           content: '';
+           position: fixed;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           width: 400px;
+           height: 400px;
+           background: url('catering-logo.png') no-repeat center center;
+           background-size: contain;
+           opacity: 0.08;
+           z-index: -1;
+           pointer-events: none;
+       }
+
+       /* Smooth scrolling */
+       html {
+           scroll-behavior: smooth;
+       }
+
+       /* Logo Header Section */
+       .logo-header {
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           min-height: 100vh;
+           background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+           backdrop-filter: blur(10px);
+           position: relative;
+           border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+       }
+
+       .logo-container {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           text-align: center;
+           animation: fadeInUp 1.2s ease-out;
+       }
+
+       .main-logo {
+           width: 200px;
+           height: 200px;
+           object-fit: contain;
+           margin-bottom: 2rem;
+           filter: drop-shadow(0 10px 30px rgba(0,0,0,0.1));
+           transition: transform 0.3s ease;
+       }
+
+       .main-logo:hover {
+           transform: scale(1.05);
+       }
+
+       .logo-text h1 {
+           font-size: 4.5rem;
+           font-weight: 700;
+           margin-bottom: 1rem;
+           color: #2c2c2c;
+           letter-spacing: -0.02em;
+           text-shadow: 0 5px 15px rgba(0,0,0,0.1);
+       }
+
+       .tagline {
+           font-size: 1.4rem;
+           color: #666;
+           font-weight: 300;
+           letter-spacing: 0.5px;
+           opacity: 0.8;
+       }
+
+       /* Section styling */
+       .section {
+           min-height: 100vh;
+           padding: 0;
+           position: relative;
+           background: rgba(255, 255, 255, 0.85);
+           backdrop-filter: blur(10px);
+           border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+       }
+
+       /* About Us Section */
+       .about-section {
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           text-align: center;
+           background: rgba(255, 255, 255, 0.9);
+           color: #2c2c2c;
+           padding: 80px 20px;
+       }
+
+       .about-content {
+           max-width: 800px;
+           animation: fadeInUp 1s ease-out;
+       }
+
+       .about-content h1 {
+           font-size: 4rem;
+           font-weight: 700;
+           margin-bottom: 2rem;
+           color: #2c2c2c;
+           letter-spacing: -0.02em;
+       }
+
+       .about-content p {
+           font-size: 1.3rem;
+           line-height: 1.8;
+           opacity: 0.8;
+           margin-bottom: 1.5rem;
+           color: #4a4a4a;
+       }
+
+       /* Food Pictures Section */
+       .food-pictures {
+           padding: 100px 20px;
+           background: rgba(250, 250, 250, 0.9);
+       }
+
+       .food-grid {
+           display: grid;
+           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+           gap: 30px;
+           max-width: 1200px;
+           margin: 0 auto;
+       }
+
+       .food-item {
+           border-radius: 20px;
+           overflow: hidden;
+           box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+           transition: transform 0.3s ease, box-shadow 0.3s ease;
+           background: white;
+       }
+
+       .food-item:hover {
+           transform: translateY(-10px);
+           box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+       }
+
+       .food-item img {
+           width: 100%;
+           height: 250px;
+           object-fit: cover;
+           transition: transform 0.3s ease;
+       }
+
+       .food-item:hover img {
+           transform: scale(1.05);
+       }
+
+       /* Video Section */
+       .video-section {
+           padding: 100px 20px;
+           background: rgba(245, 245, 245, 0.9);
+           text-align: center;
+       }
+
+       .video-container {
+           max-width: 800px;
+           margin: 0 auto;
+           border-radius: 20px;
+           overflow: hidden;
+           box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+       }
+
+       .video-container video {
+           width: 100%;
+           height: auto;
+       }
+
+       .section-title {
+           font-size: 3rem;
+           font-weight: 700;
+           margin-bottom: 3rem;
+           text-align: center;
+           color: #2c2c2c;
+           letter-spacing: -0.02em;
+       }
+
+       /* Gallery Section */
+       .gallery-section {
+           padding: 100px 20px;
+           background: rgba(248, 248, 248, 0.9);
+       }
+
+       .gallery-container {
+           max-width: 600px;
+           margin: 0 auto;
+           border-radius: 20px;
+           overflow: hidden;
+           box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+           position: relative;
+       }
+
+       .gallery-slide {
+           width: 100%;
+           height: 400px;
+           object-fit: cover;
+           display: none;
+           transition: opacity 0.5s ease-in-out;
+       }
+
+       .gallery-slide.active {
+           display: block;
+       }
+
+       /* Food Options Section */
+       .food-options {
+           padding: 100px 20px;
+           background: rgba(252, 252, 252, 0.9);
+       }
+
+       .options-container {
+           max-width: 1200px;
+           margin: 0 auto;
+       }
+
+       .option-category {
+           margin-bottom: 80px;
+       }
+
+       .category-title {
+           font-size: 2.5rem;
+           font-weight: 600;
+           margin-bottom: 2rem;
+           text-align: center;
+           color: #3a3a3a;
+           letter-spacing: -0.01em;
+       }
+
+       .horizontal-food-grid {
+           display: flex;
+           gap: 30px;
+           overflow-x: auto;
+           padding: 20px 0;
+           scroll-snap-type: x mandatory;
+       }
+
+       .horizontal-food-item {
+           min-width: 280px;
+           border-radius: 15px;
+           overflow: hidden;
+           box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+           transition: transform 0.3s ease;
+           scroll-snap-align: start;
+           background: white;
+       }
+
+       .horizontal-food-item:hover {
+           transform: scale(1.05);
+       }
+
+       .horizontal-food-item img {
+           width: 100%;
+           height: 200px;
+           object-fit: cover;
+       }
+
+       .food-item-title {
+           padding: 15px;
+           font-weight: 600;
+           color: #4a4a4a;
+           text-align: center;
+       }
+
+       /* Contact Section */
+       .contact-section {
+           padding: 100px 20px;
+           background: linear-gradient(135deg, rgba(44, 44, 44, 0.95), rgba(66, 66, 66, 0.95));
+           color: white;
+           text-align: center;
+           min-height: auto;
+           border-bottom: none;
+       }
+
+       .contact-content {
+           max-width: 800px;
+           margin: 0 auto;
+       }
+
+       .contact-title {
+           font-size: 3rem;
+           font-weight: 700;
+           margin-bottom: 3rem;
+           color: white;
+           letter-spacing: -0.02em;
+       }
+
+       .contact-info {
+           display: flex;
+           justify-content: center;
+           gap: 60px;
+           flex-wrap: wrap;
+           margin-bottom: 2rem;
+       }
+
+       .contact-item {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           gap: 15px;
+           transition: transform 0.3s ease;
+       }
+
+       .contact-item:hover {
+           transform: translateY(-5px);
+       }
+
+       .contact-icon {
+           width: 60px;
+           height: 60px;
+           background: rgba(255, 255, 255, 0.1);
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           font-size: 24px;
+           backdrop-filter: blur(10px);
+           border: 1px solid rgba(255, 255, 255, 0.2);
+       }
+
+       .contact-link {
+           color: white;
+           text-decoration: none;
+           font-size: 1.2rem;
+           font-weight: 500;
+           transition: all 0.3s ease;
+           opacity: 0.9;
+       }
+
+       .contact-link:hover {
+           opacity: 1;
+           text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+       }
+
+       .contact-cta {
+           font-size: 1.1rem;
+           opacity: 0.8;
+           margin-top: 2rem;
+           line-height: 1.6;
+       }
+
+       /* Animations */
+       @keyframes fadeInUp {
+           from {
+               opacity: 0;
+               transform: translateY(30px);
+           }
+           to {
+               opacity: 1;
+               transform: translateY(0);
+           }
+       }
+
+       .fade-in {
+           opacity: 0;
+           transform: translateY(30px);
+           transition: all 0.6s ease-out;
+       }
+
+       .fade-in.visible {
+           opacity: 1;
+           transform: translateY(0);
+       }
+
+       /* Language content visibility */
+       .lang-content {
+           display: none;
+       }
+
+       .lang-content.active {
+           display: block;
+       }
+
+       /* Responsive Design */
+       @media (max-width: 768px) {
+           .main-logo {
+               width: 150px;
+               height: 150px;
+           }
+
+           .logo-text h1 {
+               font-size: 3rem;
+           }
+
+           .tagline {
+               font-size: 1.1rem;
+           }
+
+           .about-content h1 {
+               font-size: 2.5rem;
+           }
+           
+           .section-title, .contact-title {
+               font-size: 2rem;
+           }
+           
+           .about-content p {
+               font-size: 1.1rem;
+           }
+           
+           .horizontal-food-grid {
+               gap: 15px;
+           }
+           
+           .horizontal-food-item {
+               min-width: 250px;
+           }
+
+           .language-toggle {
+               top: 15px;
+               right: 15px;
+           }
+
+           .contact-info {
+               gap: 40px;
+           }
+
+           .contact-link {
+               font-size: 1rem;
+           }
+       }
+   </style>
+</head>
+<body>
+   <!-- Language Toggle -->
+   <div class="language-toggle">
+       <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+       <button class="lang-btn" onclick="switchLanguage('de')">DE</button>
+   </div>
+
+   <!-- Logo Header Section -->
+   <section class="logo-header">
+       <div class="logo-container">
+           <img src="images/catering-logo.png" alt="Chef's Art Logo" class="main-logo">
+           <div class="logo-text">
+               <h1>Chef's Art</h1>
+               <div class="lang-content active" data-lang="en">
+                   <p class="tagline">Premium Culinary Experience</p>
+               </div>
+               <div class="lang-content" data-lang="de">
+                   <p class="tagline">Premium Kulinarisches Erlebnis</p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- About Us Section -->
+   <section class="section about-section">
+       <div class="about-content">
+           <div class="lang-content active" data-lang="en">
+               <h1>Chef's Art</h1>
+               <p>We are a young, passionate team of two professional chefs, united by our love for exceptional cuisine and a commitment to the highest quality.</p>
+               <p>After successfully completing our culinary training, our true journey began — shaped by years of experience in top restaurants and hotels across Southern and Central Europe.</p>
+                <p>From à la carte service and BBQ events to high-end catering, we've developed a deep understanding of what it takes to deliver unforgettable dining experiences.</p>
+                
+                <p>Our skills have also earned recognition at international cooking and grilling competitions, where we achieved remarkable success. 
+                <p>Today, we bring this expertise and creative flair to the Swabian region, crafting personalized menus that turn every event into something truly special.</p>
+                
+                <p>You can always count on our experience and dedication — and savor the taste of genuine culinary craftsmanship.</p>
+               
+           </div>
+           <div class="lang-content" data-lang="de">
+               <h1>Chef's Art</h1>
+               <p>Wir sind ein junges, engagiertes Team aus zwei professionellen Köchen – vereint durch unsere Leidenschaft fürs Kochen und den Anspruch an höchste Qualität.</p>
+               <p>Nach dem erfolgreichen Abschluss unserer Ausbildung begann für uns das wahre kulinarische Abenteuer. Durch unsere Tätigkeit in renommierten Restaurants und Hotels in Süd- und Mitteleuropa</p>
+               <p>sammelten wir umfassende Erfahrungen im À-la-carte-Service, BBQ-Events sowie im anspruchsvollen Cateringbereich.</p>
+               
+               <p>Unsere Expertise konnten wir auch bei internationalen Koch- und Grillwettbewerben unter Beweis stellen – mit großem Erfolg. 
+                
+                <p>Heute bringen wir all dieses Wissen und unsere kreative Kochkunst in die schwäbische Region, um Ihre Events mit außergewöhnlichen Geschmackserlebnissen zu bereichern.</p>
+               <p>Vertrauen Sie auf unsere Erfahrung und genießen Sie Catering auf höchstem Niveau – individuell, professionell und mit Liebe zum Detail.</p>
+           </div>
+       </div>
+   </section>
+
+   <!-- Food Pictures Section -->
+   <section class="section food-pictures">
+       <div class="lang-content active" data-lang="en">
+           <h2 class="section-title fade-in">Our Culinary Creations</h2>
+       </div>
+       <div class="lang-content" data-lang="de">
+           <h2 class="section-title fade-in">Unsere Kulinarischen Kreationen</h2>
+       </div>
+       <div class="food-grid fade-in">
+           <div class="food-item">
+               <img src="images/ Food11.png" alt="Gourmet Dish 1">
+           </div>
+           <div class="food-item">
+               <img src="images/ Food12.png" alt="Gourmet Dish 2">
+           </div>
+           <div class="food-item">
+               <img src="images/  Food3.png" alt="Gourmet Dish 3">
+           </div>
+           <div class="food-item">
+               <img src="images/PHOTO-2025-06-25-16-50-17 3. png .png" alt="Gourmet Dish 4">
+           </div>
+           <div class="food-item">
+               <img src="images/  Food5.png" alt="Gourmet Dish 5">
+           </div>
+           <div class="food-item">
+               <img src="images/  Food6.png" alt="Gourmet Dish 6">
+           </div>
+       </div>
+   </section>
+
+   <!-- Video Section -->
+   <section class="section video-section">
+       <div class="lang-content active" data-lang="en">
+           <h2 class="section-title fade-in">Behind the Scenes</h2>
+       </div>
+       <div class="lang-content" data-lang="de">
+           <h2 class="section-title fade-in">Hinter den Kulissen</h2>
+       </div>
+       <div class="video-container fade-in">
+           <video controls autoplay muted loop>
+               <source src="images/VIDEO-2025-06-25-16-50-14.mp4" type="video/mp4">
+               Your browser does not support the video tag.
+           </video>
+       </div>
+   </section>
+
+   <!-- Gallery Section -->
+   <section class="section gallery-section">
+       <div class="lang-content active" data-lang="en">
+           <h2 class="section-title fade-in">Event Gallery</h2>
+       </div>
+       <div class="lang-content" data-lang="de">
+           <h2 class="section-title fade-in">Event Galerie</h2>
+       </div>
+       <div class="gallery-container fade-in">
+           <img src="images/  Food7.png" alt="Gallery Image 1" class="gallery-slide active">
+           <img src="images/  Food8.png" alt="Gallery Image 2" class="gallery-slide">
+           <img src="images/  Food9.png" alt="Gallery Image 3" class="gallery-slide">
+           <img src="images/  Food10.png" alt="Gallery Image 4" class="gallery-slide">
+           <img src="images/ Food11.png" alt="Gallery Image 5" class="gallery-slide">
+           <img src="images/ Food12.png" alt="Gallery Image 6" class="gallery-slide">
+           <img src="images/ Food13.png" alt="Gallery Image 7" class="gallery-slide">
+           <img src="images/  Food14.png" alt="Gallery Image 8" class="gallery-slide">
+           <img src="images/  Food15.png" alt="Gallery Image 9" class="gallery-slide">
+           <img src="images/  Food16.png" alt="Gallery Image 10" class="gallery-slide">
+       </div>
+   </section>
+
+   <!-- Food Options Section -->
+   <section class="section food-options">
+       <div class="lang-content active" data-lang="en">
+           <h2 class="section-title fade-in">Buffet Options</h2>
+       </div>
+       <div class="lang-content" data-lang="de">
+           <h2 class="section-title fade-in">Buffet Optionen</h2>
+       </div>
+       <div class="options-container">
+           <!-- Finger Foods -->
+           <div class="option-category fade-in">
+               <div class="lang-content active" data-lang="en">
+                   <h3 class="category-title">Finger Foods</h3>
+               </div>
+               <div class="lang-content" data-lang="de">
+                   <h3 class="category-title">Fingerfood</h3>
+               </div>
+               <div class="horizontal-food-grid">
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food17.png" alt="Mini Sliders">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Gourmet Mini Sliders</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Gourmet Mini Burger</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food18.png" alt="Stuffed Mushrooms">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Truffle Stuffed Mushrooms</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Trüffel Gefüllte Pilze</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food19.png" alt="Chicken Skewers">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Herb-Crusted Chicken Skewers</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Kräuter-Hähnchen Spieße</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food20.png" alt="Vegetable Spring Rolls">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Crispy Vegetable Spring Rolls</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Knusprige Gemüse Frühlingsrollen</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food21.png" alt="Meatballs">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Swedish Meatballs</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Schwedische Fleischbällchen</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+           <!-- Appetizers -->
+           <div class="option-category fade-in">
+               <div class="lang-content active" data-lang="en">
+                   <h3 class="category-title">Appetizers</h3>
+               </div>
+               <div class="lang-content" data-lang="de">
+                   <h3 class="category-title">Vorspeisen</h3>
+               </div>
+               <div class="horizontal-food-grid">
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food39.png" alt="Bruschetta">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Tomato Basil Bruschetta</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Tomaten Basilikum Bruschetta</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food40.png" alt="Shrimp Cocktail">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Premium Shrimp Cocktail</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Premium Garnelen Cocktail</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food42.png" alt="Cheese Board">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Artisanal Cheese Board</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Handwerkliche Käseplatte</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food25.png" alt="Smoked Salmon">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Smoked Salmon Canapés</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Räucherlachs Canapés</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food26.png" alt="Crab Cakes">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Maryland Crab Cakes</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Maryland Krabben Kuchen</div>
+                       </div>
+                   </div>
+                   <div class="horizontal-food-item">
+                       <img src="images/  Food27.png" alt="Spinach Dip">
+                       <div class="lang-content active" data-lang="en">
+                           <div class="food-item-title">Warm Spinach Artichoke Dip</div>
+                       </div>
+                       <div class="lang-content" data-lang="de">
+                           <div class="food-item-title">Warmer Spinat Artischocken Dip</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- Contact Section -->
+   <section class="contact-section">
+       <div class="contact-content fade-in">
+           <div class="lang-content active" data-lang="en">
+               <h2 class="contact-title">Get in Touch</h2>
+           </div>
+           <div class="lang-content" data-lang="de">
+               <h2 class="contact-title">Kontakt</h2>
+           </div>
+           
+           <div class="contact-info">
+               <div class="contact-item">
+                   <div class="contact-icon">📞</div>
+                   <a href="tel:+4915906216007" class="contact-link">+49 1590 6216007</a>
+               </div>
+               <div class="contact-item">
+                   <div class="contact-icon">✉️</div>
+                   <a href="mailto:daniel.chambose@gmail.com" class="contact-link">daniel.chambose@gmail.com</a>
+               </div>
+           </div>
+           
+           <div class="lang-content active" data-lang="en">
+               <p class="contact-cta">
+                   Ready to create an unforgettable culinary experience?<br>
+                   Contact us today to discuss your event and discover how we can make it extraordinary.
+               </p>
+           </div>
+           <div class="lang-content" data-lang="de">
+               <p class="contact-cta">
+                   Bereit für ein unvergessliches kulinarisches Erlebnis?<br>
+                   Kontaktieren Sie uns noch heute und entdecken Sie, wie wir Ihr Event außergewöhnlich machen können.
+               </p>
+           </div>
+       </div>
+   </section>
+
+   <script>
+       let currentLanguage = 'en';
+
+       function switchLanguage(lang) {
+           currentLanguage = lang;
+           
+           // Update language buttons
+           document.querySelectorAll('.lang-btn').forEach(btn => {
+               btn.classList.remove('active');
+           });
+           document.querySelector(`[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+           
+           // Update content visibility
+           document.querySelectorAll('.lang-content').forEach(content => {
+               content.classList.remove('active');
+               if (content.getAttribute('data-lang') === lang) {
+                   content.classList.add('active');
+               }
+           });
+
+           // Update HTML lang attribute
+           document.documentElement.lang = lang;
+           
+           // Update page title
+           if (lang === 'de') {
+               document.title = 'Elite Catering - Premium Kulinarisches Erlebnis';
+           } else {
+               document.title = 'Elite Catering - Premium Culinary Experience';
+           }
+       }
+
+       // Gallery auto-rotation
+       let currentSlide = 0;
+       const slides = document.querySelectorAll('.gallery-slide');
+       const totalSlides = slides.length;
+
+       function showNextSlide() {
+           slides[currentSlide].classList.remove('active');
+           currentSlide = (currentSlide + 1) % totalSlides;
+           slides[currentSlide].classList.add('active');
+       }
+
+       // Change slide every 3 seconds
+       setInterval(showNextSlide, 3000);
+
+       // Scroll animations
+       function animateOnScroll() {
+           const elements = document.querySelectorAll('.fade-in');
+           elements.forEach(element => {
+               const elementTop = element.getBoundingClientRect().top;
+               const elementVisible = 150;
+               
+               if (elementTop < window.innerHeight - elementVisible) {
+                   element.classList.add('visible');
+               }
+           });
+       }
+
+       window.addEventListener('scroll', animateOnScroll);
+       animateOnScroll(); // Initial check
+
+       // Smooth scroll behavior for Apple-like experience
+       let isScrolling = false;
+       window.addEventListener('scroll', () => {
+           if (!isScrolling) {
+               window.requestAnimationFrame(() => {
+                   // Add any additional scroll effects here
+                   isScrolling = false;
+               });
+               isScrolling = true;
+           }
+       });
+
+       // Add subtle parallax effect to background logo
+       window.addEventListener('scroll', () => {
+           const scrolled = window.pageYOffset;
+           const rate = scrolled * -0.5;
+           document.body.style.setProperty('--scroll', `${rate}px`);
+       });
+   </script>
+</body>
+</html>
